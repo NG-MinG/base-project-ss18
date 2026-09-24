@@ -1,0 +1,17 @@
+# Hạ tầng cho Base Project: chỉ có MySQL (Database-per-service).
+# Kafka / Zookeeper / Redis sẽ được bổ sung khi làm bài.
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: shopmart-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:

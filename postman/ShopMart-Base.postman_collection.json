@@ -1,0 +1,309 @@
+{
+  "info": {
+    "name": "ShopMart Base",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "order",
+      "value": "http://localhost:8081"
+    },
+    {
+      "key": "inventory",
+      "value": "http://localhost:8082"
+    },
+    {
+      "key": "payment",
+      "value": "http://localhost:8083"
+    }
+  ],
+  "item": [
+    {
+      "name": "inventory-service",
+      "item": [
+        {
+          "name": "Get all products",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{inventory}}/api/inventory/products"
+            }
+          }
+        },
+        {
+          "name": "Get product",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{inventory}}/api/inventory/products/1"
+            }
+          }
+        },
+        {
+          "name": "Create product",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{inventory}}/api/inventory/products"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"MacBook Air M3\",\n  \"price\": 27000000,\n  \"stock\": 5\n}"
+            }
+          }
+        },
+        {
+          "name": "Update product",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{inventory}}/api/inventory/products/1"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"iPhone 15\",\n  \"price\": 21000000,\n  \"stock\": 10\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete product",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{inventory}}/api/inventory/products/4"
+            }
+          }
+        },
+        {
+          "name": "Deduct stock",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{inventory}}/api/inventory/products/1/deduct"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": 2\n}"
+            }
+          }
+        },
+        {
+          "name": "Restore stock",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{inventory}}/api/inventory/products/1/restore"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": 2\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "payment-service",
+      "item": [
+        {
+          "name": "Pay",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{payment}}/api/payment/pay"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderId\": 1,\n  \"userId\": 1,\n  \"amount\": 22000000\n}"
+            }
+          }
+        },
+        {
+          "name": "Pay (insufficient - user 2)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{payment}}/api/payment/pay"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderId\": 2,\n  \"userId\": 2,\n  \"amount\": 22000000\n}"
+            }
+          }
+        },
+        {
+          "name": "Refund",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{payment}}/api/payment/refund/1"
+            }
+          }
+        },
+        {
+          "name": "Payments by order",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{payment}}/api/payment/order/1"
+            }
+          }
+        },
+        {
+          "name": "Wallet",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{payment}}/api/payment/wallets/1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "order-service",
+      "item": [
+        {
+          "name": "Create order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{order}}/api/order"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": 1,\n  \"productId\": 1,\n  \"quantity\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "Get all orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{order}}/api/order"
+            }
+          }
+        },
+        {
+          "name": "Get order",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{order}}/api/order/1"
+            }
+          }
+        },
+        {
+          "name": "Update status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{order}}/api/order/1/status"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"CONFIRMED\",\n  \"note\": \"manual\"\n}"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
